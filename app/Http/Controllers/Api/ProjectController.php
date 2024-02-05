@@ -11,13 +11,19 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::with('type')->where('user_id', '=', 1)->paginate(12);
-        return response()->json($projects);
+        return response()->json([
+            'response' => true,
+            'data' => $projects
+        ]);
     }
 
     public function show($slug) {
         $project = Project::with('type', 'user', 'technologies')->where('slug', $slug)->first();
         if ($project) {
-            return response()->json($project);
+            return response()->json([
+                'response' => true,
+                'data' => $project
+            ]);
         } else {
             return response()->json([
                 'response' => false,
